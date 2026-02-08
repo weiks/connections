@@ -1,5 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 
+// CHANGE THIS to your Cloudflare Worker URL after deploying
+const API_URL = "https://connections-proxy.michael-weiksner.workers.dev/";
+
 const ALL_TOPICS = [
   "finance & investing (Wall Street, markets, trading, portfolio management, Bloomberg jargon)",
   "Washington DC (politics, government, Beltway culture, monuments, agencies, Congressional procedure)",
@@ -82,7 +85,7 @@ function shuffle(arr) {
 
 async function judgeAnswer(userGuess, actualName, words) {
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const response = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -170,7 +173,7 @@ export default function Connections() {
     generationCount.current += 1;
 
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
